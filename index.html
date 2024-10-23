@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenMX Add-ons</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .file-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .file-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+        .file-item img {
+            margin-right: 10px;
+        }
+		 ul {
+        list-style-type: none; /* Remove default bullets */
+        padding: 0;
+        }
+        li{
+    border: 2px solid grey; /* Add red border */
+    padding: 10px;
+    margin: 5px 0;
+	border-radius: 25px;
+    }
+    </style>
+</head>
+<body>
+    <h1>OpenMX Add-ons</h1>
+    <ul class="file-list" id="file-list">
+        <!-- Lista plików zostanie wygenerowana tutaj -->
+    </ul>
+
+    <script>
+	document.body.style.backgroundColor = '#e6e6e6';
+
+        async function fetchGitHubFiles() {
+            const repo = 'Makssuper747/OpenMX-Add-ons';
+            const apiUrl = `https://api.github.com/repos/${repo}/contents/`;
+            const fileList = document.getElementById('file-list');
+
+            try {
+                const response = await fetch(apiUrl);
+                const files = await response.json();
+
+                for (const file of files) {
+                    const listItem = document.createElement('li');
+                    listItem.className = 'file-item';
+
+                    const folderPath = encodeURIComponent(file.path).replace(/%2F/g, '/');
+                    const iconPath = `https://raw.githubusercontent.com/${repo}/main/${folderPath}/icon.svg`;
+
+                    console.log('Ikona ścieżka:', iconPath); // Wyświetla pełną ścieżkę do ikony w konsoli
+
+                    const icon = document.createElement('img');
+                    icon.src = iconPath;
+                    icon.alt = 'icon';
+                    icon.width = 100;
+                    icon.height = 100;
+
+                    const link = document.createElement('a');
+                    link.href = file.html_url;
+                    link.textContent = file.name;
+
+                    listItem.appendChild(icon);
+                    listItem.appendChild(link);
+                    fileList.appendChild(listItem);
+                }
+            } catch (error) {
+                console.error('Błąd podczas pobierania plików:', error);
+            }
+        }
+
+        fetchGitHubFiles();
+    </script>
+</body>
+</html>
