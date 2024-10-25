@@ -38,11 +38,11 @@
         .description {
             margin-left: 20px; /* Add space between file name and description */
         }
-		.center {
-        display: block;
-         margin-left: auto;
-         margin-right: auto;
-         width: 50%;
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
         }
     </style>
 </head>
@@ -72,9 +72,14 @@
 
                     const icon = document.createElement('img');
                     icon.src = iconPath;
-                    icon.alt = 'icon';
                     icon.width = 100;
                     icon.height = 100;
+
+                    // Check if the icon exists
+                    icon.onerror = function() {
+                        this.onerror = null;
+                        this.src = 'noicon.svg';
+                    };
 
                     const link = document.createElement('a');
                     link.textContent = file.name;
