@@ -44,9 +44,21 @@
             margin-right: auto;
             width: 50%;
         }
+        .category-filter {
+            margin: 20px 0;
+        }
     </style>
 </head>
 <body>
+    <div class="category-filter">
+        <label><input type="checkbox" value="Productivity" onclick="filterFiles()"> Productivity</label>
+        <label><input type="checkbox" value="Utilities" onclick="filterFiles()"> Utilities</label>
+        <label><input type="checkbox" value="Music&Video" onclick="filterFiles()"> Music&Video</label>
+        <label><input type="checkbox" value="System" onclick="filterFiles()"> System</label>
+        <label><input type="checkbox" value="Games" onclick="filterFiles()"> Games</label>
+        <label><input type="checkbox" value="Internet" onclick="filterFiles()"> Internet</label>
+        <label><input type="checkbox" value="Graphics&Photography" onclick="filterFiles()"> Graphics&Photography</label>
+    </div>
     <ul class="file-list" id="file-list">
         <!-- Lista plików zostanie wygenerowana tutaj -->
     </ul>
@@ -94,6 +106,8 @@
                     description.textContent = descriptionText;
                     description.className = 'description';
 
+                    listItem.dataset.category = getCategory(descriptionText);
+
                     listItem.appendChild(icon);
                     listItem.appendChild(link);
                     listItem.appendChild(description);
@@ -101,6 +115,34 @@
                 }
             } catch (error) {
                 console.error('Błąd podczas pobierania plików:', error);
+            }
+        }
+
+        function getCategory(description) {
+            const categories = ['Productivity', 'Utilities', 'Music&Video', 'System', 'Games', 'Internet', 'Graphics&Photography'];
+            for (const category of categories) {
+                if (description.includes(category)) {
+                    return category;
+                }
+            }
+            return 'Uncategorized';
+        }
+
+        function filterFiles() {
+            const checkboxes = document.querySelectorAll('.category-filter input[type="checkbox"]');
+            const fileList = document.getElementById('file-list');
+            const fileItems = fileList.getElementsByClassName('file-item');
+
+            const selectedCategories = Array.from(checkboxes)
+                .filter(checkbox => checkbox.checked)
+                .map(checkbox => checkbox.value);
+
+            for (const item of fileItems) {
+                if (selectedCategories.length === 0 || selectedCategories.includes(item.dataset.category)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
             }
         }
 
