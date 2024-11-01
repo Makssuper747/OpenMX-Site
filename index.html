@@ -58,6 +58,8 @@
         <label><input type="checkbox" value="Games" onclick="filterFiles()"> Games</label>
         <label><input type="checkbox" value="Internet" onclick="filterFiles()"> Internet</label>
         <label><input type="checkbox" value="Graphics&Photography" onclick="filterFiles()"> Graphics&Photography</label>
+		<label><input type="checkbox" value="Developer Tools" onclick="filterFiles()"> Developer Tools</label>
+		<label><input type="checkbox" value="Education&Science" onclick="filterFiles()"> Education&Science</label>
     </div>
     <ul class="file-list" id="file-list">
         <!-- Lista plików zostanie wygenerowana tutaj -->
@@ -119,7 +121,7 @@
         }
 
         function getCategory(description) {
-            const categories = ['Productivity', 'Utilities', 'Music&Video', 'System', 'Games', 'Internet', 'Graphics&Photography'];
+            const categories = ['Productivity', 'Utilities', 'Music&Video', 'System', 'Games', 'Internet', 'Graphics&Photography', 'Developer Tools', 'Education&Science'];
             for (const category of categories) {
                 if (description.includes(category)) {
                     return category;
